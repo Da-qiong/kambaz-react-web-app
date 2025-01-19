@@ -240,7 +240,7 @@ export default function Lab1() {
             Please
             <a href="https://www.lipsum.com" id="wd-lipsum"> click here </a>
             to get dummy text.<br/>
-            <a href="https://github.com/your-repo" id="wd-github">Visit my GitHub repository</a>
+            <a href="https://github.com/Da-qiong/kambaz-react-web-app" id="wd-github">Visit my GitHub repository</a>
 
         </form>
 
