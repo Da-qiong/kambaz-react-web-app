@@ -47,17 +47,7 @@ export default function Assignments() {
           </Button>
         </div>
       </div>
-      <li className="wd-assignment-list-item">
-        <a href="#/Kambaz/Courses/1234/Assignments/3"
-          className="wd-assignment-link" >
-          A3 - JAVASCRIPT + REACT
-        </a>
-        <p>
-          Multiple Modules | <strong>Not Available until</strong> May 20 at 12:00am | <br />
-          <strong>Due</strong> May 27 at 11:59pm | 100 pts
-        </p>
-      </li>
-
+      
       <ListGroup className="rounded-0" id="wd-assignments">
         <ListGroup.Item className="p-0 mb-5 fs-5 border-gray">
           <div className="wd-title p-3 ps-2 bg-secondary">
