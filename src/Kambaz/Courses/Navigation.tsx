@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from 'react-router-dom';
 export default function CourseNavigation() {
+<<<<<<< Updated upstream
     return (
         <div id="wd-courses-navigation">
             <Link to="/Kambaz/Courses/1234/Home" id="wd-course-home-link">Home</Link><br/>
@@ -15,4 +16,32 @@ export default function CourseNavigation() {
             <Link to="/Kambaz/People" id="wd-course-people-link">People</Link><br/>
         </div>
     );
+=======
+  const { pathname } = useLocation();
+  const { cid } = useParams();
+  const links = [
+    'Home',
+    'Modules',
+    'Piazza',
+    'Zoom',
+    'Assignments',
+    'Quizzes',
+    'Grades',
+    'People',
+  ];
+
+  return (
+    <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
+      {links.map((link) => (
+        <Link
+          to={`/Kambaz/Courses/${cid}/${link}`}
+          className={`list-group-item border border-0 ${pathname.includes(link) ? 'active' : 'text-danger'}`}
+          id={`wd-course-${link.toLocaleLowerCase()}-link`}
+        >
+          {link}
+        </Link>
+      ))}
+    </div>
+  );
+>>>>>>> Stashed changes
 }
