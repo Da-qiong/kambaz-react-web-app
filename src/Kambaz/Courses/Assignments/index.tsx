@@ -5,12 +5,48 @@ import { IoSearch } from 'react-icons/io5';
 import AssignmentControlButtons from './AssignmentControlButtons';
 import AssignmentButtons from './AssignmentsButtons';
 import { MdOutlineAssignment } from 'react-icons/md';
-import { useParams } from "react-router";
-import * as db from "../../Database";
+import { useParams, useNavigate } from "react-router";
+import { useDispatch, useSelector } from 'react-redux';
+import { addAssignment, deleteAssignment } from './reducer';
+
+interface Assignment {
+  _id: string;
+  title: string;
+  description: string;
+  points: number;
+  dueDate: string;
+  availableFrom: string;
+  availableUntil: string;
+  course: string;
+}
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+
+  const handleAddAssignment = () => {
+    const newAssignment: Assignment = {
+      _id: Date.now().toString(),
+      title: 'New Assignment',
+      description: '',
+      points: 100,
+      dueDate: '2025-05-13',
+      availableFrom: '2025-05-06',
+      availableUntil: '2025-05-20',
+      course: cid || '',
+    };
+    dispatch(addAssignment(newAssignment));
+    navigate(`/Kambaz/Courses/${cid}/Assignments/${newAssignment._id}`);
+  };
+
+  const handleDeleteAssignment = (assignmentId: string) => {
+    if (window.confirm("Are you sure you want to delete this assignment?")) {
+      dispatch(deleteAssignment(assignmentId));
+    }
+  };
+
   return (
     <div>
       <div className="d-flex flex-row">
@@ -38,6 +74,7 @@ export default function Assignments() {
             size="lg"
             className="ms-2 mb-3"
             id="wd-add-assignment-btn"
+            onClick={handleAddAssignment}
           >
             <FaPlus
               className="position-relative me-2"
@@ -58,9 +95,10 @@ export default function Assignments() {
 
           <ListGroup className="rounded-0">
             {assignments
-              .filter((assignment) => cid === assignment.course)
-              .map((assignment) => (
+              .filter((assignment: Assignment) => cid === assignment.course)
+              .map((assignment: Assignment) => (
                 <a
+                  key={assignment._id}
                   href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
                   style={{ textDecoration: 'none' }}
                 >
@@ -74,18 +112,20 @@ export default function Assignments() {
                           Multiple Modules
                         </strong>{' '}
                         | <strong>Not available until</strong>{' '}
-                        {assignment.available_at} | <strong>Due</strong>{' '}
-                        {assignment.due_date} | {assignment.points} pts
+                        {assignment.availableFrom} | <strong>Due</strong>{' '}
+                        {assignment.dueDate} | {assignment.points} pts
                       </div>
                     </div>
-                    <AssignmentButtons />
+                    <AssignmentButtons
+                      onEdit={() => navigate(`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`)}
+                      onDelete={() => handleDeleteAssignment(assignment._id)}
+                    />
                   </ListGroup.Item>
                 </a>
               ))}
           </ListGroup>
         </ListGroup.Item>
       </ListGroup>
-
-    </div >
+    </div>
   );
 }
