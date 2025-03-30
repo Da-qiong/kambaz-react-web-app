@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { IoEllipsisVertical } from 'react-icons/io5';
 import GreenCheckmark from './GreenCheckmark';
 import { BsPlus } from 'react-icons/bs';
@@ -6,10 +7,17 @@ import { FaPencil } from "react-icons/fa6";
 
 export default function ModuleControlButtons(
   { moduleId, deleteModule, editModule }: {
-    moduleId: string; deleteModule: (moduleId: string) => void;
-    editModule: (moduleId: string) => void
+    moduleId: string; 
+    deleteModule: (moduleId: string) => void;
+    editModule: (moduleId: string) => void;
   }
 ) {
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  
+  if (currentUser.role !== "FACULTY") {
+    return null;
+  }
+
   return (
     <div className="float-end">
       <FaPencil onClick={() => editModule(moduleId)} className="text-primary me-3" />
