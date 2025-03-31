@@ -4,8 +4,8 @@ import GreenCheckmark from "./GreenCheckmark";
 import ModuleEditor from "./ModuleEditor";
 
 export default function ModulesControls(
-    { moduleName, setModuleName, addModule }:
-        { moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }
+    { moduleName, setModuleName, createModuleForCourse  }:
+        { moduleName: string; setModuleName: (title: string) => void; createModuleForCourse : () => void; }
 ) {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
 
@@ -60,7 +60,7 @@ export default function ModulesControls(
                 Collapse All
             </button>
             <ModuleEditor dialogTitle="Add Module" moduleName={moduleName}
-                setModuleName={setModuleName} addModule={addModule} />
+                setModuleName={setModuleName} addModule={createModuleForCourse } />
         </div>
     );
 }

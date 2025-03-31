@@ -1,8 +1,8 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateAssignment } from './reducer';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import * as client from "./client";
 
 interface Assignment {
   _id: string;
@@ -17,7 +17,6 @@ interface Assignment {
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
   const assignment = assignments.find((a: Assignment) => a._id === aid);
@@ -33,9 +32,9 @@ export default function AssignmentEditor() {
     course: cid || '',
   });
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const updatedAssignment = { ...assignment, ...formData };
-    dispatch(updateAssignment(updatedAssignment));
+    await client.updateAssignment(updatedAssignment);
     navigate(`/Kambaz/Courses/${cid}/Assignments`);
   };
 

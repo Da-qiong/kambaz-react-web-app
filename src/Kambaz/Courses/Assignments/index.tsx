@@ -6,8 +6,8 @@ import AssignmentControlButtons from './AssignmentControlButtons';
 import AssignmentButtons from './AssignmentsButtons';
 import { MdOutlineAssignment } from 'react-icons/md';
 import { useParams, useNavigate } from "react-router";
-import { useDispatch, useSelector } from 'react-redux';
-import { addAssignment, deleteAssignment } from './reducer';
+import { useSelector } from 'react-redux';
+import * as client from "./client";
 
 interface Assignment {
   _id: string;
@@ -22,28 +22,25 @@ interface Assignment {
 
 export default function Assignments() {
   const { cid } = useParams();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
-  const handleAddAssignment = () => {
-    const newAssignment: Assignment = {
-      _id: Date.now().toString(),
-      title: 'New Assignment',
-      description: '',
+  const handleAddAssignment = async () => {
+    const newAssignment = {
+      title: "New Assignment",
+      description: "",
       points: 100,
-      dueDate: '2025-05-13',
-      availableFrom: '2025-05-06',
-      availableUntil: '2025-05-20',
-      course: cid || '',
+      dueDate: "2025-05-13",
+      availableFrom: "2025-05-06",
+      availableUntil: "2025-05-20",
     };
-    dispatch(addAssignment(newAssignment));
-    navigate(`/Kambaz/Courses/${cid}/Assignments/${newAssignment._id}`);
+    const created = await client.createAssignment(cid!, newAssignment);
+    navigate(`/Kambaz/Courses/${cid}/Assignments/${created._id}`);
   };
-
-  const handleDeleteAssignment = (assignmentId: string) => {
+  
+  const handleDeleteAssignment = async (assignmentId: string) => {
     if (window.confirm("Are you sure you want to delete this assignment?")) {
-      dispatch(deleteAssignment(assignmentId));
+      await client.deleteAssignment(assignmentId);
     }
   };
 
