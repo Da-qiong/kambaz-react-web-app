@@ -38,6 +38,9 @@ export default function TOC() {
       <Nav.Item>
         <Nav.Link href="https://github.com/Da-qiong">My GitHub</Nav.Link>
       </Nav.Item>
+      <Nav.Item>
+        <Nav.Link href="https://github.com/Da-qiong/kambaz-node-server-app">My Server</Nav.Link>
+      </Nav.Item>
     </Nav>
   );
 }
