@@ -1,10 +1,6 @@
-import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import PeopleDetails from "./Details";
 import { Link } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import * as userClient from "../../Account/client";
-import * as enrollClient from "../../Account/enrollments-client";
 
 
 
